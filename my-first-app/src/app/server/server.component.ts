@@ -6,8 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./server.component.scss']
 })
 export class ServerComponent implements OnInit {
+  serverName = 'Server001';
 
   constructor() { }
+
+  onUpdateServerName(event: Event){
+    this.serverName = (<HTMLInputElement>event?.target).value;
+  }
 
   ngOnInit(): void {
   }
