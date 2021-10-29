@@ -9,14 +9,14 @@ export class ServerComponent implements OnInit {
   username = '';
 
   constructor() { }
-
-  onResetButtonClick(event: Event) {
+  
+  onResetButtonClick() {
     if (this.username !== '') {
       this.username = '';
       return
     }
-    console.log("Nothing to reset");
-    return 
+    console.log('true');
+    return
   }
 
   ngOnInit(): void {

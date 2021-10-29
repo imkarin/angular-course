@@ -1,3 +1,5 @@
 <input type="text" [(ngModel)]="username">
-<button (click)="onResetButtonClick($event)">Reset name</button>
+<button 
+[disabled]="!username"
+(click)="onResetButtonClick()">Reset name</button>
 <p>Chosen username: {{ username }}</p>
