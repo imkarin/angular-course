@@ -6,16 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./server.component.scss']
 })
 export class ServerComponent implements OnInit {
-  username = '';
+  secretVisible = false;
+  items = new Array();
 
   constructor() { }
   
-  onResetButtonClick() {
-    if (this.username !== '') {
-      this.username = '';
-      return
-    }
-    console.log('true');
+  onButtonClick() {
+    this.secretVisible = !this.secretVisible;
+    this.items = this.items.concat("Button pressed");
     return
   }
 

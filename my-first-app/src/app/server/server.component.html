@@ -1,5 +1,7 @@
-<input type="text" [(ngModel)]="username">
-<button 
-[disabled]="!username"
-(click)="onResetButtonClick()">Reset name</button>
-<p>Chosen username: {{ username }}</p>
+<button (click)="onButtonClick()">Display Details</button>
+<p *ngIf="secretVisible">Secret password = pizza</p>
+<div *ngFor="let item of items; let i = index"
+      [ngClass]="{whiteText: i >= 4}"
+      [ngStyle]="{backgroundColor: i >= 4? 'blue' : 'transparent'}">
+      {{ i + '. ' + item }}
+</div>
