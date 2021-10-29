@@ -6,12 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./server.component.scss']
 })
 export class ServerComponent implements OnInit {
-  serverName = 'Server001';
+  username = '';
 
   constructor() { }
 
-  onUpdateServerName(event: Event){
-    this.serverName = (<HTMLInputElement>event?.target).value;
+  onResetButtonClick(event: Event) {
+    if (this.username !== '') {
+      this.username = '';
+      return
+    }
+    console.log("Nothing to reset");
+    return 
   }
 
   ngOnInit(): void {
