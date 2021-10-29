@@ -13,7 +13,7 @@ export class ServerComponent implements OnInit {
   
   onButtonClick() {
     this.secretVisible = !this.secretVisible;
-    this.items = this.items.concat("Button pressed");
+    this.items.push("Button pressed");
     return
   }
 
