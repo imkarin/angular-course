@@ -2,7 +2,6 @@
   <app-cockpit 
     (serverCreated)="onServerAdded($event)"
     (blueprintCreated)="onBlueprintAdded($event)" >
-    <!-- ^ Listen to serverCreated and blueprintAdded events -->
   </app-cockpit>
   <hr>
   <div class="row">
@@ -10,8 +9,12 @@
       <app-server-element 
         *ngFor="let serverElement of serverElements"
         [element]="serverElement">  
-        <!-- [element] binds the current serverElement to
-             the server-element.component's 'element' property -->
+        <!-- This content will be projected into the server-element component, 
+          because of ng-content directive in the app-server-element template: -->
+        <p>
+          <strong *ngIf="serverElement.type === 'server'" style="color: red">{{ serverElement.content }}</strong>
+          <em *ngIf="serverElement.type === 'blueprint'">{{ serverElement.content }}</em>
+        </p>
       </app-server-element>
     </div>
   </div>
