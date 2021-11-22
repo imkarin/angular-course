@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-cockpit',
@@ -11,25 +11,28 @@ export class CockpitComponent implements OnInit {
   // add @Output to make the property 'listenable' from the outside
   @Output() serverCreated = new EventEmitter<{serverName: string, serverContent: string}>(); // in <> you pass the eventdata you're going to emit
   @Output() blueprintCreated = new EventEmitter<{serverName: string, serverContent: string}>(); // in <> you pass the eventdata you're going to emit
-  newServerName = '';
-  newServerContent = '';
+  
+  // newServerName = '';
+  // newServerContent = '';
+  // ViewChild, pass the reference to the html-element that needs to be viewed:
+  @ViewChild('serverContentInput', {static: true}) serverContentInput: ElementRef;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  onAddServer(nameInput) {  // <- receive the referenced input element
+  onAddServer(nameInput: HTMLInputElement) {  // <- receive the referenced input element
     this.serverCreated.emit({
       serverName: nameInput.value, 
-      serverContent: this.newServerContent
+      serverContent: this.serverContentInput.nativeElement.value
     });
   }
 
-  onAddBlueprint() {
+  onAddBlueprint(nameInput: HTMLInputElement) {
     this.blueprintCreated.emit({
-      serverName: this.newServerName, 
-      serverContent: this.newServerContent
+      serverName: nameInput.value, 
+      serverContent: this.serverContentInput.nativeElement.value
     });
   }
 }
