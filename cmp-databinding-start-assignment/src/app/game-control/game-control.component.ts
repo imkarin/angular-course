@@ -8,7 +8,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class GameControlComponent implements OnInit {
   @Output() numberUpdated = new EventEmitter<number>();
   currentNumber: number = 0;
-  interval: ReturnType<typeof setInterval> = setInterval(() => {}, 5000); // random default value so ts doesn't complain
+  interval: ReturnType<typeof setInterval> = setInterval(() => {}, 1000); // random default value so ts doesn't complain
   gameRunning: boolean = false; // disables Start/Stop button
 
   constructor() { }
@@ -27,7 +27,6 @@ export class GameControlComponent implements OnInit {
     this.gameRunning = false;
     this.currentNumber = 0;
     clearInterval(this.interval); // stop the interval
-
     // outputs 0, will be trigger for deleting all current numbers from the page:
     this.numberUpdated.emit(this.currentNumber); 
   }

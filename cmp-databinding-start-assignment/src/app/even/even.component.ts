@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-even',
@@ -6,8 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./even.component.scss']
 })
 export class EvenComponent implements OnInit {
-  // input: receives the latest even number, stores in array
+  // input: receives the updated array of even numbers
   // create a new Even-component for every number in the array
+
+  @Input() numbers: number[] = [];
 
   constructor() { }
 
