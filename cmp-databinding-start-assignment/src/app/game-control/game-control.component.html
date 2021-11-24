@@ -1,3 +1,13 @@
 <p>Game controls:</p>
-<button (click)="startGame()" class="btn btn-success">Start</button>
-<button (click)="stopGame()" class="btn btn-danger">Stop</button>
+<button 
+    (click)="startGame()" 
+    class="btn btn-success" 
+    [disabled]="gameRunning">
+    Start
+</button>
+<button 
+    (click)="stopGame()" 
+    class="btn btn-danger"
+    [disabled]="!gameRunning">
+    Stop
+</button>
