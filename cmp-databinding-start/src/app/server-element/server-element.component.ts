@@ -3,7 +3,9 @@ import { AfterContentChecked,
          AfterViewChecked, 
          AfterViewInit, 
          Component, 
+         ContentChild, 
          DoCheck, 
+         ElementRef, 
          Input, 
          OnChanges, 
          OnDestroy, 
@@ -21,7 +23,9 @@ export class ServerElementComponent implements OnInit, OnChanges, DoCheck, After
   @Input() element: {    
     type: string, 
     name: string, 
-    content: string };
+    content: string 
+  };
+  @ContentChild('contentParagraph') paragraph: ElementRef;
 
   constructor() {
     console.log('constructor called!')
@@ -34,14 +38,18 @@ export class ServerElementComponent implements OnInit, OnChanges, DoCheck, After
   
   ngOnInit(): void {
     console.log('ngOnInit called!')
+    // This won't work, because ContentInit hasn't happened yet:
+    console.log('Text content of paragraph: ' + this.paragraph.nativeElement.textContent)
   }
-
+  
   ngDoCheck() { // run by angular to check for changes, triggered by all kinds of things, like: event being called, promise giving back data, ...
     console.log('ngDoCheck called!')
   }
-
+  
   ngAfterContentInit() { // runs when content gets projected into view through ng-content directive
     console.log('ngAfterContentInit called!')
+    // ContentInit has happened, so now we see the content (paragraph text):
+    console.log('Text content of paragraph: ' + this.paragraph.nativeElement.textContent)
   }
   
   ngAfterContentChecked() {
