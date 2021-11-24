@@ -9,7 +9,7 @@ export class EvenComponent implements OnInit {
   // input: receives the updated array of even numbers
   // create a new Even-component for every number in the array
 
-  @Input() numbers: number[] = [];
+  @Input('latestEvenNum') number: number = 0;
 
   constructor() { }
 

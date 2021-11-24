@@ -6,11 +6,11 @@
   <div class="row">
     <div class="col-xs-6">
       <h3>Odd numbers:</h3>
-      <app-odd *ngFor="let oddNum of oddNumbers" [numbers]="oddNumbers"></app-odd>
+      <app-odd *ngFor="let oddNum of oddNumbers" [latestOddNum]="oddNum"></app-odd>
     </div>
     <div class="col-xs-6">
       <h3>Even numbers:</h3>
-      <app-even *ngFor="let evenNum of evenNumbers" [numbers]="evenNumbers"></app-even>
+      <app-even *ngFor="let evenNum of evenNumbers" [latestEvenNum]="evenNum"></app-even>
     </div>
   </div>
 </div>
