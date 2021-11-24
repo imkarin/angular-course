@@ -5,10 +5,12 @@
 
   <div class="row">
     <div class="col-xs-6">
-      <app-odd [numbers]="oddNumbers"></app-odd>
+      <h3>Odd numbers:</h3>
+      <app-odd *ngFor="let oddNum of oddNumbers" [numbers]="oddNumbers"></app-odd>
     </div>
     <div class="col-xs-6">
-      <app-even [numbers]="evenNumbers"></app-even>
+      <h3>Even numbers:</h3>
+      <app-even *ngFor="let evenNum of evenNumbers" [numbers]="evenNumbers"></app-even>
     </div>
   </div>
 </div>

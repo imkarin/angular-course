@@ -13,6 +13,8 @@ export class AppComponent {
   onNumberUpdated(updatedNumber: number) {
     if (updatedNumber === 0) {
       // end game, delete all odd-even components
+      this.evenNumbers = [];
+      this.oddNumbers = [];
       return
     }
     
