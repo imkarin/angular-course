@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'recipe-shopping-app';
+  selectedFeature = 'recipe'; // default value, spelled the same as in header component
+
+  onNavigate(feature: string) {
+    this.selectedFeature = feature;
+    console.log(this.selectedFeature)
+  }
 }
