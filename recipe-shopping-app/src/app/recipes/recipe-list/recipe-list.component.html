@@ -6,6 +6,11 @@
 
 <div class="row">
     <div class="col-xs-12">
-        <app-recipe-item *ngFor="let recipe of recipes" [recipe]="recipe"></app-recipe-item>
+        <app-recipe-item 
+            *ngFor="let recipeEl of recipes" 
+            [recipe]="recipeEl"
+            (recipeSelected)="onRecipeSelected(recipeEl)"> <!-- We don't need to pass the recipe
+            from recipe-item with $event with the EventEmitter, because of the ngFor loop we can use recipeEl-->
+        </app-recipe-item>
     </div>
 </div>
