@@ -12,6 +12,7 @@ export class BasicHighlightDirective implements OnInit {
     // we can inject the element this directive sits on into this directive
     constructor(private elementRef: ElementRef) {} // name is arbitrary, type is important
                                                    // 'private' automatically makes this a property of this class
+                                                   // This is NOT good practice! See better-highlight directive.
     ngOnInit() {
         this.elementRef.nativeElement.style.backgroundColor = this.highlightColor;
     }
