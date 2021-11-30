@@ -1,6 +1,7 @@
 <h1>Hello</h1>
 <p>Not highlighted</p>
 <p appBasicHighlight highlightColor="green">Highlighted</p>
-<p appBetterHighlight>I'm highlighted in a better way!</p>
+<p appBetterHighlight [defaultColor]="'yellow'" [highlightColor]="'magenta'">I'm highlighted in a better way!</p>
+
 <!-- <appBasicHighlight [highlightColor]="1 > 0 ? 'green' : 'red'">Hi!</appBasicHighlight> -->
 <!-- ^ If the basic-highlight directive's selector was appBasicHighlight (without [] around it) -->
