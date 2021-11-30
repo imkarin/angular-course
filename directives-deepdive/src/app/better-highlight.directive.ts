@@ -20,5 +20,4 @@ export class BetterHighlightDirective implements OnInit {
     this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'red')
   }
 }
-
 // you can put this in a 'shared' folder, or make a separate 'directives' folder
