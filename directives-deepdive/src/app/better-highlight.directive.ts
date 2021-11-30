@@ -1,9 +1,12 @@
-import { Directive, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostBinding, HostListener, OnInit, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[appBetterHighlight]'
 })
 export class BetterHighlightDirective implements OnInit {
+  @HostBinding('style.backgroundColor') bgColor: string = 'red'; // accessing the DOM property style.backgroundColor
+  // bind to any property of the element you're sitting on!
+
   constructor(private elRef: ElementRef, private renderer: Renderer2) { } 
   
   ngOnInit() {
@@ -13,11 +16,12 @@ export class BetterHighlightDirective implements OnInit {
   }
   
   @HostListener('mouseenter') mouseover() {
-    this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'blue')
+    // this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'blue');
+    this.bgColor = 'blue';
   }
-
+  
   @HostListener('mouseleave') mouseleave() {
-    this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'red')
+    // this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'red');
+    this.bgColor = 'red';
   }
 }
-// you can put this in a 'shared' folder, or make a separate 'directives' folder
