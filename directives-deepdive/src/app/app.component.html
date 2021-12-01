@@ -22,3 +22,12 @@
 <ng-template [appUnless]="greeting === 'Hello'"> <!-- This works the same as the component with *appUnless above -->
     <p>The greeting is bye now!</p>
 </ng-template>
+
+<h2>ngSwitch:</h2>
+<div [ngSwitch]="value">
+    <p *ngSwitchCase="5">Value is 5</p>
+    <p *ngSwitchCase="15">Value is 15</p>
+    <p *ngSwitchCase="25">Value is 25</p>
+    <p *ngSwitchCase="35">Value is 35</p>
+    <p *ngSwitchDefault>Value is default</p> <!-- It's important to do this in order -->
+</div>

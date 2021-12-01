@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   greeting: string = 'Hello';
+  value = 5;
 
   toggleGreeting() {
     this.greeting = this.greeting === 'Hello' ? 'Bye' : 'Hello';
