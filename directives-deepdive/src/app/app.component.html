@@ -2,6 +2,16 @@
 <p>Not highlighted</p>
 <p appBasicHighlight highlightColor="green">Highlighted</p>
 <p appBetterHighlight [defaultColor]="'yellow'" [highlightColor]="'magenta'">I'm highlighted in a better way!</p>
-
 <!-- <appBasicHighlight [highlightColor]="1 > 0 ? 'green' : 'red'">Hi!</appBasicHighlight> -->
 <!-- ^ If the basic-highlight directive's selector was appBasicHighlight (without [] around it) -->
+
+<h2>Structural directives behind the scenes:</h2>
+<button (click)="toggleGreeting()">Toggle greeting</button>
+<p *ngIf="greeting === 'Hello'">I'm saying hello!</p>
+<p *ngIf="greeting === 'Bye'">I'm saying bye!</p>
+<ng-template [ngIf]="greeting === 'Hello'"> <!-- This works the same as the component with *ngIf above -->
+    <p>I'm saying hello!</p>
+</ng-template>
+<ng-template [ngIf]="greeting === 'Bye'">
+    <p>I'm saying bye!</p>
+</ng-template>

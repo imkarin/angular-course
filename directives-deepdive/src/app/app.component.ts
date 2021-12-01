@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  
+  greeting: string = 'Hello';
+
+  toggleGreeting() {
+    this.greeting = this.greeting === 'Hello' ? 'Bye' : 'Hello';
+  }
 }
