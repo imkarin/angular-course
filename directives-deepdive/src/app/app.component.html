@@ -6,6 +6,7 @@
 <!-- ^ If the basic-highlight directive's selector was appBasicHighlight (without [] around it) -->
 
 <h2>Structural directives behind the scenes:</h2>
+<h3>What does the * do?</h3>
 <button (click)="toggleGreeting()">Toggle greeting</button>
 <p *ngIf="greeting === 'Hello'">I'm saying hello!</p>
 <p *ngIf="greeting === 'Bye'">I'm saying bye!</p>
@@ -14,4 +15,10 @@
 </ng-template>
 <ng-template [ngIf]="greeting === 'Bye'">
     <p>I'm saying bye!</p>
+</ng-template>
+
+<h3>Making our own 'unless' component:</h3>
+<p *appUnless="greeting === 'Hello'">The greeting is bye now!</p>
+<ng-template [appUnless]="greeting === 'Hello'"> <!-- This works the same as the component with *appUnless above -->
+    <p>The greeting is bye now!</p>
 </ng-template>
