@@ -1,7 +1,12 @@
 <div class="row">
   <div class="col-xs-12 col-sm-4">
     <div class="list-group">
+      <!-- The routerlink will later have a dynamic server id -->
+      <!-- QueryParams & fragmentare not new directives, it's another bindable property of the routerLink directive -->
       <a
+        [routerLink]="['/servers', 5, 'edit']"
+        [queryParams]="{allowEdit: '1'}"
+        fragment="loading"
         href="#"
         class="list-group-item"
         *ngFor="let server of servers">

@@ -19,7 +19,8 @@ const appRoutes: Routes = [
   { path: 'users', component: UsersComponent }, // don't add the slash to the path!
                                                 // the component is the page shown on this route
   { path: 'users/:id/:name', component: UserComponent }, // :id is a parameter, you can later retrieve this inside of the loaded component
-  { path: 'servers', component: ServersComponent}
+  { path: 'servers', component: ServersComponent},
+  { path: 'servers/:id/edit', component: EditServerComponent}
 ];
 
 @NgModule({
