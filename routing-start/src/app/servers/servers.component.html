@@ -4,7 +4,7 @@
       <!-- The routerlink will later have a dynamic server id -->
       <!-- QueryParams & fragmentare not new directives, it's another bindable property of the routerLink directive -->
       <a
-        [routerLink]="['/servers', 5, 'edit']"
+        [routerLink]="['/servers', server.id]"
         [queryParams]="{allowEdit: '1'}"
         fragment="loading"
         href="#"
@@ -18,6 +18,6 @@
     <button class="btn btn-primary" (click)="onReload()">Reload Page</button>
     <app-edit-server></app-edit-server>
     <hr>
-    <app-server></app-server>
+    <!-- <app-server></app-server> -->
   </div>
 </div>

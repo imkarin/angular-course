@@ -20,6 +20,7 @@ const appRoutes: Routes = [
                                                 // the component is the page shown on this route
   { path: 'users/:id/:name', component: UserComponent }, // :id is a parameter, you can later retrieve this inside of the loaded component
   { path: 'servers', component: ServersComponent},
+  { path: 'servers/:id', component: ServerComponent},
   { path: 'servers/:id/edit', component: EditServerComponent}
 ];
 
