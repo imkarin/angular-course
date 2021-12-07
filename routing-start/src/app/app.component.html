@@ -7,9 +7,15 @@
       <!-- Don't use href the 'normal' way, this way the links will cause a refresh -->
       <!-- Use angular's routerLink directive -->
       <ul class="nav nav-tabs">
-        <li role="presentation" class="active"><a routerLink="/">Home</a></li>
-        <li role="presentation"><a routerLink="/servers">Servers</a></li>
-        <li role="presentation"><a [routerLink]="['/users']">Users</a></li>
+        <!-- Somehow "home" is always marked as active, because the "/" path is always part of the path we are on -->
+        <!--  -->
+        <li role="presentation" 
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">
+          <a routerLink="/">Home</a>
+        </li>
+        <li role="presentation" routerLinkActive="active"><a routerLink="/servers">Servers</a></li>
+        <li role="presentation" routerLinkActive="active"><a [routerLink]="['/users']">Users</a></li>
       </ul>
     </div>
   </div>
