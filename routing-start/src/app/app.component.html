@@ -8,7 +8,7 @@
       <!-- Use angular's routerLink directive -->
       <ul class="nav nav-tabs">
         <!-- Somehow "home" is always marked as active, because the "/" path is always part of the path we are on -->
-        <!--  -->
+        <!-- Use the routerLinkActiveOptions 'exact' option to prevent this -->
         <li role="presentation" 
           routerLinkActive="active"
           [routerLinkActiveOptions]="{exact: true}">
