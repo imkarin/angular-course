@@ -12,6 +12,7 @@ import { EditServerComponent } from './servers/edit-server/edit-server.component
 import { ServerComponent } from './servers/server/server.component';
 import { ServersService } from './servers/servers.service';
 import { RouterModule, Routes } from '@angular/router';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 // add routing (appRoutes = all the routes of the application)
 const appRoutes: Routes = [
@@ -23,6 +24,8 @@ const appRoutes: Routes = [
     { path: ':id', component: ServerComponent}, // these are now children of the 'servers' path
     { path: ':id/edit', component: EditServerComponent} // ServersComponent can now contain a router-outlet for these children
   ]},
+  { path: 'not-found', component: PageNotFoundComponent},
+  { path: '**', redirectTo: '/not-found'}, // ** = wildcard 'catch all paths we don't know', make sure it's the last route!
 ];
 
 @NgModule({
@@ -33,7 +36,8 @@ const appRoutes: Routes = [
     ServersComponent,
     UserComponent,
     EditServerComponent,
-    ServerComponent
+    ServerComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
