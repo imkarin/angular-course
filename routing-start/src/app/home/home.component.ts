@@ -19,9 +19,8 @@ export class HomeComponent implements OnInit {
     // we need to get access to our router and tell it: "go here"
     // we do this by injecting it into the constructor
     this.router.navigate(
-      ['/servers', id, 'edit'], 
-      {queryParams: {allowEdit: '1'}, fragment: 'loading'} // programmatically passing queryparams/fragments
+      ['/servers'], 
+      {fragment: 'loading'} // programmatically passing fragments
     )
-
   }
 }

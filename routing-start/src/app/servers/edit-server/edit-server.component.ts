@@ -27,26 +27,26 @@ export class EditServerComponent implements OnInit {
     // this.serverStatus = this.server.status;
 
     // set the component's server based on the route we're on (route contains server id)
-    this.route.params.subscribe(
-      (params) => {
+    this.route.params.subscribe((params) => {
         this.server = this.serversService.getServer(+params.id);
-      }
-    )
+    });
+    this.serverName = this.server.name;
+    this.serverStatus = this.server.status;
 
     // the queryparams stay the same here as before clicking the 'edit' button,
     // because we added the queryParamsHandling: 'preserve' option to the edit button
     // in the server.component.ts
-    this.route.queryParams.subscribe(
-      (queryParams: Params) => {
-        this.allowEdit = queryParams.allowEdit === '1' ? true : false;
-        console.log(this.allowEdit)
-      }
-    )
+    this.route.queryParams.subscribe((queryParams: Params) => {
+      this.allowEdit = queryParams.allowEdit === '1' ? true : false;
+      console.log(this.allowEdit)
+    });
   }
 
   onUpdateServer() {
     this.serversService.updateServer(this.server.id, {name: this.serverName, status: this.serverStatus});
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['../'], { relativeTo: this.route, queryParamsHandling: 'preserve' });
+    // ^ again, preserve queryParams so that the user can immediately click 'edit' again without 
+    // it suddenly saying that you can't edit the server (when you should be able to)
   }
 
 }
