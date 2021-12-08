@@ -33,6 +33,9 @@ export class EditServerComponent implements OnInit {
       }
     )
 
+    // the queryparams stay the same here as before clicking the 'edit' button,
+    // because we added the queryParamsHandling: 'preserve' option to the edit button
+    // in the server.component.ts
     this.route.queryParams.subscribe(
       (queryParams: Params) => {
         this.allowEdit = queryParams.allowEdit === '1' ? true : false;
