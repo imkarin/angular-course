@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { AuthGuard } from "./auth-guard.service";
 import { HomeComponent } from "./home/home.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { EditServerComponent } from "./servers/edit-server/edit-server.component";
@@ -14,7 +15,7 @@ const appRoutes: Routes = [
     { path: 'users', component: UsersComponent, children: [
       { path: ':id/:name', component: UserComponent }, // :id is a parameter, you can later retrieve this inside of the loaded component
     ]}, // don't add the slash to the path! the component is the page shown on this route
-    { path: 'servers', component: ServersComponent, children: [
+    { path: 'servers', canActivate: [AuthGuard], component: ServersComponent, children: [ // pass guards in canActivate
       { path: ':id', component: ServerComponent}, // these are now children of the 'servers' path
       { path: ':id/edit', component: EditServerComponent} // ServersComponent can now contain a router-outlet for these children
     ]},
