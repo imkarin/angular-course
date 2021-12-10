@@ -15,9 +15,13 @@ const appRoutes: Routes = [
     { path: 'users', component: UsersComponent, children: [
       { path: ':id/:name', component: UserComponent }, // :id is a parameter, you can later retrieve this inside of the loaded component
     ]}, // don't add the slash to the path! the component is the page shown on this route
-    { path: 'servers', canActivate: [AuthGuard], component: ServersComponent, children: [ // pass guards in canActivate
-      { path: ':id', component: ServerComponent}, // these are now children of the 'servers' path
-      { path: ':id/edit', component: EditServerComponent} // ServersComponent can now contain a router-outlet for these children
+    { path: 'servers', 
+      // canActivate: [AuthGuard], // pass guards in canActivate
+      canActivateChild: [AuthGuard], // canActivate for childroutes
+      component: ServersComponent, 
+      children: [ 
+        { path: ':id', component: ServerComponent}, // these are now children of the 'servers' path
+        { path: ':id/edit', component: EditServerComponent} // ServersComponent can now contain a router-outlet for these children
     ]},
     { path: 'not-found', component: PageNotFoundComponent},
     { path: '**', redirectTo: '/not-found'}, // ** = wildcard 'catch all paths we don't know', make sure it's the last route!
