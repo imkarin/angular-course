@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "./auth-guard.service";
+import { ErrorPageComponent } from "./error-page/error-page.component";
 import { HomeComponent } from "./home/home.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { EditServerComponent } from "./servers/edit-server/edit-server.component";
@@ -23,7 +24,8 @@ const appRoutes: Routes = [
         { path: ':id', component: ServerComponent}, // these are now children of the 'servers' path
         { path: ':id/edit', component: EditServerComponent} // ServersComponent can now contain a router-outlet for these children
     ]},
-    { path: 'not-found', component: PageNotFoundComponent},
+    // { path: 'not-found', component: PageNotFoundComponent},
+    { path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found'}}, // data gets passed to the component
     { path: '**', redirectTo: '/not-found'}, // ** = wildcard 'catch all paths we don't know', make sure it's the last route!
   ];
 @NgModule({
