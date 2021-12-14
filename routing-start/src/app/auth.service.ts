@@ -1,7 +1,7 @@
 export class AuthService {
     // some sort of logic here that reaches out to a server, allow us to log in/out etc...
     // and track the loggedIn state
-    loggedIn = false;
+    loggedIn = true;
 
     isAuthenticated() {
         const promise = new Promise((resolveFunc, rejectFunc) => {

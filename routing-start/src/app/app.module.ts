@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth.service';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { ServerResolver } from './servers/server/server-resolver.service';
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import { ErrorPageComponent } from './error-page/error-page.component';
     FormsModule,
     AppRoutingModule
   ],
-  providers: [ServersService, AuthGuard, AuthService], // add authguard + authservice here, or else ng won't be able to inject them for us
+  providers: [ServersService, AuthGuard, AuthService, ServerResolver], // add authguard + authservice here, or else ng won't be able to inject them for us
   bootstrap: [AppComponent]
 })
 export class AppModule { }

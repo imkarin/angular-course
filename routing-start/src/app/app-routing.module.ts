@@ -5,6 +5,7 @@ import { ErrorPageComponent } from "./error-page/error-page.component";
 import { HomeComponent } from "./home/home.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { EditServerComponent } from "./servers/edit-server/edit-server.component";
+import { ServerResolver } from "./servers/server/server-resolver.service";
 import { ServerComponent } from "./servers/server/server.component";
 import { ServersComponent } from "./servers/servers.component";
 import { UserComponent } from "./users/user/user.component";
@@ -21,7 +22,8 @@ const appRoutes: Routes = [
       canActivateChild: [AuthGuard], // canActivate for childroutes
       component: ServersComponent, 
       children: [ 
-        { path: ':id', component: ServerComponent}, // these are now children of the 'servers' path
+        { path: ':id', component: ServerComponent, resolve: {server: ServerResolver}}, // resolve maps the data returned from ServerResolver to the 'server' object (can be any name), 
+                                                                                       // which can be used in the loaded component
         { path: ':id/edit', component: EditServerComponent} // ServersComponent can now contain a router-outlet for these children
     ]},
     // { path: 'not-found', component: PageNotFoundComponent},

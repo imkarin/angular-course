@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Data } from '@angular/router';
 
 import { ServersService } from '../servers.service';
 
@@ -18,15 +18,18 @@ export class ServerComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    // old, static server
-    // this.server = this.serversService.getServer(1);
+    // before, we used to get the server id from the route params:
+    // this.route.params.subscribe(
+    //   (routeParams) => {
+    //     const serverId = +routeParams['id']; // add the + to make this a number (not a string)
+    //     this.server = this.serversService.getServer(serverId);
+    //   }
+    // )
 
-    this.route.params.subscribe(
-      (routeParams) => {
-        const serverId = +routeParams['id']; // add the + to make this a number (not a string)
-        this.server = this.serversService.getServer(serverId);
-      }
-    )
+    // now, our ServerResolver has gotten this data for us beforehand:
+    this.route.data.subscribe((routeData: Data) => {
+      this.server = routeData['server']; // this 'server' has to match the name in the routing-module path's 'resolve' object
+    })
   }
 
   onEdit() {
@@ -36,4 +39,7 @@ export class ServerComponent implements OnInit {
       { relativeTo: this.route, queryParamsHandling: 'preserve'}) // keep the current queryParams
   }
 
+}
+function Data(routeData: any, Data: any) {
+  throw new Error('Function not implemented.');
 }
