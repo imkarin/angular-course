@@ -1,10 +1,9 @@
-<app-header (featureSelected)="onNavigate($event)"></app-header>
+<app-header></app-header>
+<!-- $event ^ refers to the event data, in this case the selected feature string -->
 <div class="container">
-    <!-- $event refers to the event data, in this case the selected feature string -->
     <div class="row">
         <div class="col-md-12">
-            <app-recipes *ngIf="selectedFeature === 'recipe'"></app-recipes>
-            <app-shopping-list *ngIf="selectedFeature !== 'recipe'"></app-shopping-list>
+            <router-outlet></router-outlet>
         </div>
     </div>
 </div>
