@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { interval, Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -30,9 +30,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
 
-    this.customObsSubscription = customIntervalObservable.pipe(map((count: number) => { // map is an operator that takes your data and does something with it
+    this.customObsSubscription = customIntervalObservable.pipe(filter((count: number) => {
+      // filter returns true or false, true lets the data go onto the next operator
+      return count > 0;
+    }),
+    map((count: number) => { // map is an operator that takes your data and does something with it
       return 'Round: ' + (count + 1);
-    })).subscribe( // subscribe to the pipe/operator now
+    }))
+    .subscribe( // subscribe to the pipe/operator now
     count => { // first argument of .subscribe() is function that's run on an obs next-event
       console.log(count);
     }, 
