@@ -7,35 +7,38 @@ import { interval, Observable, Subscription } from 'rxjs';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-
-  private firstObsSubscription: Subscription;
   private customObsSubscription: Subscription;
   
   constructor() { }
 
   ngOnInit() {
-  // // you can prevent new observables being started every time, by storing it in a variable:
-  // // and later unsubscribing from this variable/subscription in ngOnDestroy()
-  //   this.firstObsSubscription = interval(1000).subscribe(count => {
-  //     console.log(count);
-  //   })
-
-  // ^ Building this observable manually
+  // Building observable manually
     const customIntervalObservable = new Observable(observer => { // observer = the part that is interested in being informed about new data etc.
       let count = 0;
       setInterval(() => { // using the normal js setInterval function
         observer.next(count);  // .next emits a new value
+        if ( count == 2 ) {
+          observer.complete();
+        }
+        if (count > 3 ) {
+          observer.error(new Error('Count is greater than 3!')) // when an obs throws an error or complete, it 'dies'. you can still unsubscribe from it
+        }
         count++;
       }, 1000);
     })
 
-    this.customObsSubscription = customIntervalObservable.subscribe(count => {
+    this.customObsSubscription = customIntervalObservable.subscribe(count => { // first argument of .subscribe() is function that's run on an obs next-event
       console.log(count);
+    },
+    error => { // second argument (optional) is function thats run on an obs error-event
+      alert(error.message);
+    },
+    () => { // third argumnet (optional) is for obs complete-event
+      console.log('Complete!')
     })
   }
 
   ngOnDestroy() {
-    // this.firstObsSubscription.unsubscribe();
     this.customObsSubscription.unsubscribe();
   }
 }
