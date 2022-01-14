@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { UserService } from './user/user.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { UserService } from './user/user.service';
 export class AppComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService) {}
   
-  buttonActivatedSubscription
+  private buttonActivatedSubscription: Subscription;
 
   activated = false;
 
@@ -20,6 +21,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.buttonActivatedSubscription.unsubcribe();
+    this.buttonActivatedSubscription.unsubscribe();
   }
 }
