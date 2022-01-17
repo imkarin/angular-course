@@ -15,6 +15,23 @@ export class AppComponent {
 
   suggestUserName() {
     const suggestedName = 'Superuser';
+    // With form.setValue you can overwrite the whole 'value' property of the form
+    // this.myForm.setValue({
+    //   userData: {
+    //     username: suggestedName,
+    //     email: '',
+    //     gender: '',
+    //   },
+    //   secretQuestion: '',
+    //   secretAnswer: ''
+    // })
+
+    // with form.patchValue you can update a selection of values
+    this.myForm.form.patchValue({
+      userData: {
+        username: suggestedName
+      }
+    })
   }
 
   onSubmit() {
