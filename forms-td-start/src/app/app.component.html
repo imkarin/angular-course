@@ -18,6 +18,7 @@
           <div class="form-group">
             <label for="email">Mail</label>
             <input 
+              #email="ngModel"
               name="email" 
               ngModel 
               type="email" 
@@ -31,6 +32,7 @@
               - email = not a default html attribute, but another angular selector for a directive
             if these are not valid, you can still submit, but the form data will contain valid=false/status="INVALID"
             -->
+            <span *ngIf="email.invalid && email.touched" class="help-block">Please enter a valid email</span>
           </div>
         </div>
 
