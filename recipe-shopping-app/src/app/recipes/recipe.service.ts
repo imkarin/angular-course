@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Recipe } from './recipe.model';
 
 @Injectable({
@@ -17,6 +18,4 @@ export class RecipeService {
   getRecipe(id: number) {
     return this.recipes.find(element => element['id'] == id);
   }
-
-  recipeSelected = new EventEmitter<Recipe>();
 }
