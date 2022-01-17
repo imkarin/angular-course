@@ -35,6 +35,23 @@
               formControlName="gender">{{ gender }}
           </label>
         </div>
+        <div formArrayName="hobbies"> <!-- specify formArrayName, just like you do with formControlName -->
+          <h4>Your Hobbies</h4>
+          <button 
+            type="button" 
+            class="btn btn-default"
+            (click)="onAddHobby()">
+            Add hobby!
+        </button> <!-- Make it type="button", or default will be type="submit"-->
+        <div 
+          class="form-group"
+          *ngFor="let hobbyControl of signupForm.get('hobbies').controls; let i = index"> <!-- Now you need to loop through all the controls in the formArray (hobbies)-->
+          <input 
+            type="text"
+            [formControlName]="i">  <!-- 'hobbies' is an FormArray, so you get the FormControls in it by index -->
+        </div>
+        </div>
+
         <button class="btn btn-primary" type="submit">Submit</button>
       </form>
     </div>
