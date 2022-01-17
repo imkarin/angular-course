@@ -12,6 +12,7 @@
             id="username"
             class="form-control"
             formControlName="username"> <!-- we're passing a string, so [] property binding not nessecary -->
+          </div>
           <div class="form-group">
             <label for="email">email</label>
             <input
@@ -26,7 +27,6 @@
             </span>
           </div>
         </div>
-      </div>
         <div class="radio" *ngFor="let gender of genders">
           <label>
             <input
@@ -42,14 +42,14 @@
             class="btn btn-default"
             (click)="onAddHobby()">
             Add hobby!
-        </button> <!-- Make it type="button", or default will be type="submit"-->
-        <div 
-          class="form-group"
-          *ngFor="let hobbyControl of signupForm.get('hobbies').controls; let i = index"> <!-- Now you need to loop through all the controls in the formArray (hobbies)-->
-          <input 
-            type="text"
-            [formControlName]="i">  <!-- 'hobbies' is an FormArray, so you get the FormControls in it by index -->
-        </div>
+          </button> <!-- Make it type="button", or default will be type="submit"-->
+          <div 
+            class="form-group"
+            *ngFor="let hobbyControl of signupForm.get('hobbies').controls; let i = index"> <!-- Now you need to loop through all the controls in the formArray (hobbies)-->
+            <input 
+              type="text"
+              [formControlName]="i">  <!-- 'hobbies' is an FormArray, so you get the FormControls in it by index -->
+          </div>
         </div>
 
         <button class="btn btn-primary" type="submit">Submit</button>
