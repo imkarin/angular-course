@@ -2,7 +2,9 @@
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
       <form #f="ngForm" (ngSubmit)="onSubmit()">
-        <div id="user-data">
+        <div id="user-data" ngModelGroup="userData">
+          <!-- ngModelGroup groups the controls in this div in the form's JSON object-->
+          <!-- Sidenote: now this group (div) also gets ng classes about the form state like ng-dirty -->
           <div class="form-group">
             <label for="username">Username</label>
             <input 
