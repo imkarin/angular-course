@@ -11,6 +11,7 @@ export class AppComponent {
   // since you can now use this myForm variable whenever
   @ViewChild('f') myForm: NgForm;
   secretAnswer: string = "Answer";
+  genders: string[] = ["Male", "Female"];
 
   suggestUserName() {
     const suggestedName = 'Superuser';
