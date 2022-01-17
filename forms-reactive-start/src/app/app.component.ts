@@ -13,9 +13,10 @@ export class AppComponent {
   ngOnInit() {
     this.signupForm = new FormGroup({
       // you add controls here in key-value pairs
-      'username': new FormControl('SuperUser', Validators.required), 
-      // angular will execute the validators.required method whenever it detects changes in the formcontrol input
-      'email': new FormControl(null, [Validators.required, Validators.email]), // you can also add an array of validators
+      'userData': new FormGroup({
+        'username': new FormControl('SuperUser', Validators.required), 
+        'email': new FormControl(null, [Validators.required, Validators.email]), // you can also add an array of validators
+      }),
       'gender': new FormControl('male')
     });
   }
