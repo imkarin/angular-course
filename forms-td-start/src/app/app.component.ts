@@ -40,5 +40,7 @@ export class AppComponent {
 
     this.user = { ... this.myForm.form.value };
     console.log(this.user);
+
+    this.myForm.reset(); // resets the form's values and state
   }
 }
