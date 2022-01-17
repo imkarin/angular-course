@@ -55,7 +55,7 @@
         <div class="form-group">
           <label for="secret">Secret Question</label>
           <select 
-            ngModel 
+            [ngModel]="'pet'" 
             #secretQuestion="ngModel"
             name="secretQuestion"
             id="secret" 
@@ -78,6 +78,14 @@
 
         <button class="btn btn-primary" type="submit">Submit</button>
       </form>
+      <hr>
+      <div *ngIf="f.submitted" class="row">
+        <h3>Your answers:</h3>
+        <p>Username: {{ user.userData.username }}</p>
+        <p>Email: {{ user.userData.email }}</p>
+        <p>Gender: {{ user.userData.gender }}</p>
+        <p>Secret question/answer: {{ user.secretQuestion }}/{{ user.secretAnswer }}</p>
+      </div>
     </div>
   </div>
 </div>

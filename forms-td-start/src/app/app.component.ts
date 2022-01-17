@@ -12,6 +12,7 @@ export class AppComponent {
   @ViewChild('f') myForm: NgForm;
   secretAnswer: string = "Answer";
   genders: string[] = ["Male", "Female"];
+  user: object = {};
 
   suggestUserName() {
     const suggestedName = 'Superuser';
@@ -36,5 +37,8 @@ export class AppComponent {
 
   onSubmit() {
     console.log(this.myForm);
+
+    this.user = { ... this.myForm.form.value };
+    console.log(this.user);
   }
 }
