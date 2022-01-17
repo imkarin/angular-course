@@ -40,6 +40,7 @@
           <label for="secret">Secret Question</label>
           <select 
             ngModel 
+            #secretQuestion="ngModel"
             name="secretQuestion"
             id="secret" 
             class="form-control">
@@ -47,6 +48,17 @@
             <option value="teacher">Your first teacher?</option>
           </select>
         </div>
+        <!-- form-group is a bootstrap styling class -->
+        <div class="form-group">
+          <textarea 
+            *ngIf="secretQuestion.value"
+            [(ngModel)]="secretAnswer"
+            name="secretAnswer" 
+            class="form-control"
+            rows="3">
+          </textarea>
+        </div>
+        <p>Your reply: {{ secretAnswer }}</p>
 
         <button class="btn btn-primary" type="submit">Submit</button>
       </form>
