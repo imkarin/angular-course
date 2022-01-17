@@ -10,7 +10,8 @@
               ngModel 
               type="text" 
               id="username" 
-              class="form-control">
+              class="form-control"
+              required>
           </div> <!-- ngModel allows you to see this input's value when you read #f (the form's data)-->
           <button class="btn btn-default" type="button">Suggest an Username</button>
           
@@ -21,7 +22,15 @@
               ngModel 
               type="email" 
               id="email" 
-              class="form-control">
+              class="form-control"
+              required
+              email>
+            <!-- VALIDATORS:
+              - required = normally a default html attribute, but here angular detects it
+                so it acts as a selector for a built-in angular directive that makes this input required.
+              - email = not a default html attribute, but another angular selector for a directive
+            if these are not valid, you can still submit, but the form data will contain valid=false/status="INVALID"
+            -->
           </div>
         </div>
 

@@ -9,7 +9,7 @@ import { NgForm } from '@angular/forms';
 export class AppComponent {
   // Getting the form data with viewchild allows you to get the data anytime you want
   // since you can now use this myForm variable whenever
-  @ViewChild('f') myForm: NgForm;
+  @ViewChild('f') myForm;
 
   suggestUserName() {
     const suggestedName = 'Superuser';
