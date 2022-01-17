@@ -76,7 +76,12 @@
         </div>
         <p>Your reply: {{ secretAnswer }}</p>
 
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <button 
+          class="btn btn-primary" 
+          type="submit"
+          [disabled]="f.invalid">
+          Submit
+        </button>
       </form>
       <hr>
       <div *ngIf="f.submitted" class="row">
