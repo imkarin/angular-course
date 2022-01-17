@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +13,15 @@ export class AppComponent {
   ngOnInit() {
     this.signupForm = new FormGroup({
       // you add controls here in key-value pairs
-      'username': new FormControl('SuperUser'),
-      'email': new FormControl(null), // validation will be added later
+      'username': new FormControl('SuperUser', Validators.required), 
+      // angular will execute the validators.required method whenever it detects changes in the formcontrol input
+      'email': new FormControl(null, [Validators.required, Validators.email]), // you can also add an array of validators
       'gender': new FormControl('male')
-      // later we will make it clear what kind of controls these are
     });
+  }
+
+  onSubmit() { // we don't need a localreference to the form in html, 
+               // we already have it as a variable in this code
+    console.log(this.signupForm);
   }
 }
