@@ -29,7 +29,7 @@ export class AppComponent {
       console.log(newValue);
     })
 
-    this.signupForm.statusChanges.subscribe((newStatus) => {
+    this.signupForm.get('userData.email').statusChanges.subscribe((newStatus) => {
       console.log(newStatus);
     })
   }
