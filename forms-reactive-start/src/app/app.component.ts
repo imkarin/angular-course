@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ export class AppComponent {
       'userData': new FormGroup({
         'username': new FormControl('SuperUser', [Validators.required, this.forbiddenNamesCheck.bind(this)]), 
         // bind: good old javascript trick to make sure that "this" refers to this component
-        'email': new FormControl(null, [Validators.required, Validators.email]), // you can also add an array of validators
+        'email': new FormControl(null, [Validators.required, Validators.email], this.forbiddenEmailCheck), // you can also add an array of validators, async validator = 3rd argument
       }),
       'gender': new FormControl('male'),
       'hobbies': new FormArray([]) // array of form-controls
@@ -52,5 +53,19 @@ export class AppComponent {
     }
     return null; // IMPORTANT: if validation is successfull, you have to pass nothing or null
     // that's how you tell angular that a form control is valid
+  }
+
+  forbiddenEmailCheck(control: FormControl): Promise<any> | Observable<any> {
+    const promise = new Promise<any>((resolve, reject) => { // promises always receive a function with resolve and reject
+      // Simulate reaching out to a server
+      setTimeout(() => {
+        if (control.value === 'test@test.com') {
+          resolve({'emailIsForbidden': true}) // promise resolves with the same error-object as with synchronous normal validators
+        } else {
+          resolve(null) // promise resolves with the same null (if control's input=valid)
+        }
+      }, 1500)
+    })
+    return promise
   }
 }
