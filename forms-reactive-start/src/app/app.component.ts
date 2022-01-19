@@ -23,6 +23,15 @@ export class AppComponent {
       'gender': new FormControl('male'),
       'hobbies': new FormArray([]) // array of form-controls
     });
+
+    // Subscribe to changes in form:
+    this.signupForm.valueChanges.subscribe((newValue) => {
+      console.log(newValue);
+    })
+
+    this.signupForm.statusChanges.subscribe((newStatus) => {
+      console.log(newStatus);
+    })
   }
 
   onSubmit() { // we don't need a localreference to the form in html, 
