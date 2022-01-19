@@ -14,6 +14,30 @@
 
           Upon submitting the form, simply print the value to the console
       -->
+      <h3>Add a project</h3>
+      <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+        <div class="form-group" formGroupName="projectdata">
+          <label for="projectname">Project name: </label>
+          <input formControlName="projectname" class="form-control" type="text" id="projectname">
+          <p *ngIf="projectForm.get('projectdata.projectname').errors?.projectNameForbidden" >Projectname cannot be "test"</p>
+          <p *ngIf="projectForm.get('projectdata.projectname').errors?.required" >Projectname cannot be empty</p>
+          
+          <label for="email">Email: </label>
+          <input formControlName="email" class="form-control" type="email" id="email">
+          <p *ngIf="projectForm.get('projectdata.email').invalid && projectForm.get('projectdata.email').touched">
+            Please enter a valid email
+          </p>
+        </div>
+
+        <label for="status">Status: </label>
+        <select formControlName="projectstatus" class="form-control" name="status" id="status">
+          <option value="stable">Stable</option>
+          <option value="critical">Critical</option>
+          <option value="finished">Finished</option>
+        </select>
+
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
     </div>
   </div>
 </div>
