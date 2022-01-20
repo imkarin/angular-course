@@ -8,13 +8,28 @@ export class ShoppingListService {
     ]
 
     shoppingListUpdate = new Subject<Ingredient[]>();
+    startedEditing = new Subject<number>();
 
     getShoppingList() {
         return this.shoppingList.slice();
     }
 
+    getIngredient(index: number) {
+        return this.shoppingList[index];
+    }
+
+    setIngredient(index: number, updatedIngredient: Ingredient) {
+        this.shoppingList[index] = updatedIngredient;
+        this.shoppingListUpdate.next(this.shoppingList.slice()); // event: shoppinglist updated!
+    }
+
+    deleteIngredient(index: number) {
+        this.shoppingList.splice(index, 1);
+        this.shoppingListUpdate.next(this.shoppingList.slice()); // event: shoppinglist updated!
+    }
+
     addIngredient(newIngredient: Ingredient) {
         this.shoppingList.push(newIngredient); // add ingredient to shoppinglist
-        this.shoppingListUpdate.next(this.shoppingList); // event: shoppinglist updated!
+        this.shoppingListUpdate.next(this.shoppingList.slice()); // event: shoppinglist updated!
     }
 }

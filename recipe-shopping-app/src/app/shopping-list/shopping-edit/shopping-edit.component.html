@@ -31,9 +31,15 @@
                         type="submit" 
                         style="margin-right: 8px"
                         [disabled]="f.invalid">
-                        Add
+                        {{ editMode? 'Update' : 'Add' }}
                     </button>
-                    <button class="btn btn-danger" type="button" style="margin-right: 8px">Delete</button>
+                    <button 
+                        (click)="onDeleteItem(f)"
+                        class="btn btn-danger" 
+                        type="button" 
+                        style="margin-right: 8px">
+                        Delete
+                    </button>
                     <button class="btn btn-primary" type="button">Clear</button>
                 </div>
             </div>
