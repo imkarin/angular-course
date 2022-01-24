@@ -12,7 +12,7 @@
           </span>
           <strong>{{ server.name }}</strong> |
           {{ server.instanceType | uppercase }} | <!-- built-in pipe: uppercase -->
-          {{ server.started }}
+          {{ server.started | date }} <!-- built-in pipe: date -->
         </li>
       </ul>
     </div>
