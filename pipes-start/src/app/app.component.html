@@ -10,7 +10,7 @@
             class="badge">
             {{ server.status }}
           </span>
-          <strong>{{ server.name }}</strong> |
+          <strong>{{ server.name | shorten }}</strong> | <!-- custom pipe -->
           {{ server.instanceType | uppercase }} | <!-- built-in pipe: uppercase -->
           {{ server.started | date:'fullDate':'CET' }} <!-- built-in pipe: date, passing parameters -->
         </li>

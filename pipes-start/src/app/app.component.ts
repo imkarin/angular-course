@@ -15,7 +15,7 @@ export class AppComponent {
     },
     {
       instanceType: 'large',
-      name: 'User Database',
+      name: 'User',
       status: 'stable',
       started: new Date(15, 1, 2017)
     },
