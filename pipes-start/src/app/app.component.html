@@ -1,6 +1,12 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <h2>App status: {{ appStatus | async}}</h2> <!-- 
+        ^This will appear as [object Promise] and it won't update, even when
+        the promise resolves with a string (this is good, it saves performance,
+        we should be specific about our app behaviour!). Therefore we need the
+        pipe: async (built-in).
+      -->
       <button class="btn btn-primary" (click)="addServer()">Add server</button>
       <input type="text" [(ngModel)]="filteredStatus">
       <ul class="list-group">

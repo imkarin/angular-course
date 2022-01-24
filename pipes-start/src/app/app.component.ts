@@ -6,6 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  appStatus = new Promise((resolve, reject) => { // fake some async event
+    setTimeout(() => {
+      resolve('stable')
+    }, 2000)
+  })
+
   filteredStatus: string; 
 
   servers = [
