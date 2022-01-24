@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   filteredStatus: string; 
+
   servers = [
     {
       instanceType: 'medium',
@@ -33,11 +34,21 @@ export class AppComponent {
       started: new Date(15, 1, 2017)
     }
   ];
+
   getStatusClasses(server: {instanceType: string, name: string, status: string, started: Date}) {
     return {
       'list-group-item-success': server.status === 'stable',
       'list-group-item-warning': server.status === 'offline',
       'list-group-item-danger': server.status === 'critical'
     };
+  }
+
+  addServer() {
+    this.servers.push({
+      instanceType: 'small',
+      name: 'New Server',
+      status: 'stable',
+      started: new Date(1, 1, 2017)
+    })
   }
 }
