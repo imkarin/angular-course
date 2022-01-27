@@ -26,5 +26,9 @@ export class DataStorageService {
     }
 
     fetchRecipes() {
+        this.http.get<Recipe[]>(this.fireBaseUrl + '/recipes.json')
+        .subscribe(recipes => {
+            this.recipeService.setRecipes(recipes);
+        })
     }
 }
