@@ -20,7 +20,7 @@
                         required
                         minlength="6"
                         type="password"
-                        name=""
+                        name="password"
                         id="password" 
                         class="form-control">
                 </label>
@@ -29,7 +29,7 @@
                 <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid">
                     {{ loginMode? 'Login' : 'Sign up'}}
                 </button> | 
-                <button (click)="onSwitchMode()" class="btn btn-primary">
+                <button (click)="onSwitchMode()" class="btn btn-primary" type="button">
                     Switch to {{ loginMode? 'sign up' : 'login' }} mode
                 </button>
             </div>
