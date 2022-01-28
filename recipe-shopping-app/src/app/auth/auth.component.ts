@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
+import { AuthResponseData, AuthService } from './auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -27,28 +28,28 @@ export class AuthComponent implements OnInit {
       return; // do this, because users can manually 'enable' the submit button with browser tools
     }
 
+    this.loading = true;
     const email = form.value.email;
     const password = form.value.password;
+    // create this for cleaner code below, since the subscribe is the same for both signup and login mode:
+    let authObs: Observable<AuthResponseData>; 
 
-    if (this.loginMode) { // login request in loginmode
-
+    // login request in loginmode
+    if (this.loginMode) { 
+      authObs = this.authService.logIn(email, password)
     } else { // signup request in registermode
-      this.loading = true;
-      this.authService.signUp(email, password).subscribe(response => {
+      authObs = this.authService.signUp(email, password)
+    }
+
+    authObs.subscribe(
+      response => {
         console.log(response)
+        this.error = null;
         this.loading = false;
       }, errorMsg => {
-        // switch(errorResponse.error.error.message) {
-        //   case 'EMAIL_EXISTS':
-        //     this.error = 'An account with this email already exists.';
-        // }
-        // This is too much logic for a component! -> move to the auth service
-
         this.error = errorMsg;
         this.loading = false;
-      }
-      );
-    }
+      });
 
     form.reset();
   } 

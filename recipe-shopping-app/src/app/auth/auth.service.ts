@@ -5,13 +5,14 @@ import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 
-interface AuthResponseData {
+export interface AuthResponseData {
   kind: string,
   idToken: string,
   email: string,
   refreshToken: string,
   expiresIn: string,
-  localId: string
+  localId: string,
+  registered?: boolean // the login response contains registered key 
 }
 
 @Injectable({
@@ -39,8 +40,30 @@ export class AuthService {
             errorMessage = 'An account with this email already exists.';
         }
       }
-
       return throwError(errorMessage); // we throw an observable that only contains a message
-    }))
+    }));
+  }
+  
+  logIn(email: string, password: string) {
+    return this.http.post<AuthResponseData>(
+      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + this.fireBaseApiKey,
+      {
+        email: email,
+        password: password,
+        returnSecureToken: true
+      }
+      ).pipe(catchError(errorRes => {
+        let errorMessage = 'An error occurred!';
+        
+        if (errorRes.error && errorRes.error.error) {
+          switch(errorRes.error.error.message) {
+            case 'EMAIL_NOT_FOUND':
+              errorMessage = 'Email address not found.';
+            case 'INVALID_PASSWORD':
+              errorMessage = 'Invalid password.';
+          }
+        }
+        return throwError(errorMessage);
+    }));
   }
 }
