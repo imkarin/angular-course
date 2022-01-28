@@ -21,15 +21,13 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   signUp(email: string, password: string) {
-    this.http.post<AuthResponseData>(
+    return this.http.post<AuthResponseData>(
       'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + this.fireBaseApiKey,
       {
         email: email,
         password: password,
         returnSecureToken: true
       }
-    ).subscribe(response => {
-      console.log(response);
-    })
+    )
   }
 }

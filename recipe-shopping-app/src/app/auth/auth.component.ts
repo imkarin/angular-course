@@ -10,6 +10,8 @@ import { AuthService } from './auth.service';
 export class AuthComponent implements OnInit {
 
   loginMode = true;
+  loading = false;
+  requestMade = false;
 
   constructor(private authService: AuthService) { }
 
@@ -31,7 +33,17 @@ export class AuthComponent implements OnInit {
     if (this.loginMode) { // login request in loginmode
 
     } else { // signup request in registermode
-      this.authService.signUp(email, password);
+      this.loading = true;
+      this.authService.signUp(email, password).subscribe(response => {
+        this.loading = false;
+        this.requestMade = true;
+        console.log(response)
+      }, error => {
+        this.loading = false;
+        this.requestMade = true;
+        console.log(error)
+      }
+      );
     }
 
     form.reset();
