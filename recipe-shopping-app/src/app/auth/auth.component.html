@@ -39,5 +39,8 @@
         <app-loading-spinner *ngIf="loading"></app-loading-spinner>
 
         <!-- When request is done, show message... -->
+        <div class="alert alert-danger" *ngIf="error">
+            <p>{{ error }} </p>
+        </div>
     </div>
 </div>

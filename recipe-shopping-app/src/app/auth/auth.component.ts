@@ -11,7 +11,7 @@ export class AuthComponent implements OnInit {
 
   loginMode = true;
   loading = false;
-  requestMade = false;
+  error: string = null;
 
   constructor(private authService: AuthService) { }
 
@@ -36,12 +36,10 @@ export class AuthComponent implements OnInit {
       this.loading = true;
       this.authService.signUp(email, password).subscribe(response => {
         this.loading = false;
-        this.requestMade = true;
         console.log(response)
       }, error => {
         this.loading = false;
-        this.requestMade = true;
-        console.log(error)
+        this.error = 'An error occurred!';
       }
       );
     }
