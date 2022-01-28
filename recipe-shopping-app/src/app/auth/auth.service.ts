@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { catchError, tap } from 'rxjs/operators';
-import { Subject, throwError } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { User } from './user.model';
 
 
@@ -22,7 +22,7 @@ export interface AuthResponseData {
 export class AuthService {
   private fireBaseApiKey = environment["FIREBASE_APIKEY"]
 
-  currentUser = new Subject<User>();
+  currentUser = new BehaviorSubject<User>(null);
 
   constructor(private http: HttpClient) { }
 
