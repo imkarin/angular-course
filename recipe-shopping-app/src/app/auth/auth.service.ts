@@ -52,10 +52,13 @@ export class AuthService {
         switch(errorRes.error.error.message) {
           case 'EMAIL_EXISTS':
             errorMessage = 'An account with this email already exists.';
+            break;
           case 'EMAIL_NOT_FOUND':
-                errorMessage = 'Email address not found.';
-              case 'INVALID_PASSWORD':
-                errorMessage = 'Invalid password.';
+            errorMessage = 'Email address not found.';
+            break;
+          case 'INVALID_PASSWORD':
+            errorMessage = 'Invalid credentials.';
+            break;
         }
       }
       return throwError(errorMessage); // we throw an observable that only contains a message
