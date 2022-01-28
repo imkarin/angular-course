@@ -1,8 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { Subject, throwError } from 'rxjs';
+import { User } from './user.model';
 
 
 export interface AuthResponseData {
@@ -21,6 +22,8 @@ export interface AuthResponseData {
 export class AuthService {
   private fireBaseApiKey = environment["FIREBASE_APIKEY"]
 
+  currentUser = new Subject<User>();
+
   constructor(private http: HttpClient) { }
 
   signUp(email: string, password: string) {
@@ -30,8 +33,11 @@ export class AuthService {
         email: email,
         password: password,
         returnSecureToken: true
-      })
-      .pipe(catchError(this.handleError));
+      }
+    )
+    .pipe(catchError(this.handleError), tap(res => {
+      return this.handleAuthentication(res.email, res.localId, res.idToken, +res.expiresIn);
+    }))
   }
   
   logIn(email: string, password: string) {
@@ -41,8 +47,20 @@ export class AuthService {
         email: email,
         password: password,
         returnSecureToken: true
-      })
-      .pipe(catchError(this.handleError));
+      }
+    )
+    .pipe(catchError(this.handleError), tap(res => {
+      return this.handleAuthentication(res.email, res.localId, res.idToken, +res.expiresIn);
+    }));
+  }
+
+  private handleAuthentication(email: string, localId: string, idToken: string, expiresIn: number) {
+    // response expiresIn = a string with number of seconds in which the ID token expires
+    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    const user = new User(email, localId, idToken, expirationDate);
+
+    // we update our current user (as a subject, so that components can subscribe to it!)
+    this.currentUser.next(user);
   }
 
   private handleError(errorRes: HttpErrorResponse) {
