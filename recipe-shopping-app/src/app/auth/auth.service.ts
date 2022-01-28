@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { catchError } from 'rxjs/operators';
@@ -30,18 +30,8 @@ export class AuthService {
         email: email,
         password: password,
         returnSecureToken: true
-      }
-    ).pipe(catchError(errorRes => {
-      let errorMessage = 'An error occurred!'
-
-      if (errorRes.error && errorRes.error.error) {
-        switch(errorRes.error.error.message) {
-          case 'EMAIL_EXISTS':
-            errorMessage = 'An account with this email already exists.';
-        }
-      }
-      return throwError(errorMessage); // we throw an observable that only contains a message
-    }));
+      })
+      .pipe(catchError(this.handleError));
   }
   
   logIn(email: string, password: string) {
@@ -51,19 +41,23 @@ export class AuthService {
         email: email,
         password: password,
         returnSecureToken: true
-      }
-      ).pipe(catchError(errorRes => {
-        let errorMessage = 'An error occurred!';
-        
-        if (errorRes.error && errorRes.error.error) {
-          switch(errorRes.error.error.message) {
-            case 'EMAIL_NOT_FOUND':
-              errorMessage = 'Email address not found.';
-            case 'INVALID_PASSWORD':
-              errorMessage = 'Invalid password.';
-          }
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  private handleError(errorRes: HttpErrorResponse) {
+    let errorMessage = 'An error occurred!'
+
+      if (errorRes.error && errorRes.error.error) {
+        switch(errorRes.error.error.message) {
+          case 'EMAIL_EXISTS':
+            errorMessage = 'An account with this email already exists.';
+          case 'EMAIL_NOT_FOUND':
+                errorMessage = 'Email address not found.';
+              case 'INVALID_PASSWORD':
+                errorMessage = 'Invalid password.';
         }
-        return throwError(errorMessage);
-    }));
+      }
+      return throwError(errorMessage); // we throw an observable that only contains a message
   }
 }
