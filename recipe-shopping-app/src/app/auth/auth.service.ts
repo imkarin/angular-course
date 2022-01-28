@@ -21,7 +21,6 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   signUp(email: string, password: string) {
-    console.log(email, password)
     this.http.post<AuthResponseData>(
       'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + this.fireBaseApiKey,
       {

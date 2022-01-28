@@ -18,18 +18,22 @@ export class AuthComponent implements OnInit {
 
   onSwitchMode() { // switch from loginMode to registerMode
     this.loginMode = !this.loginMode;
-    console.log(this.loginMode);
   }
 
   onSubmit(form: NgForm) {
-    const formValue = form.value;
-
-    if (this.loginMode) {
-
-    } else {
-      this.authService.signUp(formValue.email, formValue.password);
+    if(form.invalid) {
+      return; // do this, because users can manually 'enable' the submit button with browser tools
     }
-    
+
+    const email = form.value.email;
+    const password = form.value.password;
+
+    if (this.loginMode) { // login request in loginmode
+
+    } else { // signup request in registermode
+      this.authService.signUp(email, password);
+    }
+
     form.reset();
   } 
 
