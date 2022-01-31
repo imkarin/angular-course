@@ -47,6 +47,7 @@
         <!-- <app-alert (closeAlert)="error = null" [message]="error" *ngIf="error"></app-alert> -->
         
         <!-- Error alert created programmatically (dynamic component) -->
-        
+        <ng-template appPlaceholder> <!-- ng-template: angular doesnt actually render anything in the DOM, better placeholder than a div -->
+        </ng-template>
     </div>
 </div>

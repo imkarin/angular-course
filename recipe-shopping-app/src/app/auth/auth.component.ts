@@ -1,8 +1,9 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AlertComponent } from '../shared/alert/alert.component';
+import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
 import { AuthResponseData, AuthService } from './auth.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class AuthComponent implements OnInit {
   loginMode = true;
   loading = false;
   // error: string = null; // you don't need this global error with this approach
+  @ViewChild(PlaceholderDirective) alertHost; // you can pass a type to viewchild, it will look for the first place where this type (this directive) is used
 
   constructor(
     private authService: AuthService,
@@ -69,11 +71,13 @@ export class AuthComponent implements OnInit {
 
   private showErrorAlert(message: string) {
     // this method will return an AlertComponent-factory:
-    this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
+    const alertCmpFactory = this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
 
     // you can use the factory to create a complete component
-    // you also need to tell angular where to add this component (angular needs a viewcontainer ref)
-    
+    // we will place the component in the ng-template with the appPlaceholder directive
+    const hostViewContainerRef = this.alertHost.viewContainerRef;
+    // hostViewContainerRef.clear(); // make sure there's no components in it already
+    hostViewContainerRef.createComponent(alertCmpFactory);
 
   }
 
