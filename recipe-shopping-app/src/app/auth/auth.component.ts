@@ -60,6 +60,10 @@ export class AuthComponent implements OnInit {
     );
 
     form.reset();
-  } 
+  }
+
+  onCloseAlert() {
+    console.log('close')
+  }
 
 }
