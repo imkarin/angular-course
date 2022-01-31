@@ -58,6 +58,27 @@ export class AuthService {
     }));
   }
 
+  autoLogIn() {
+    const userData: {
+      email: string;
+      id: string;
+      _token: string;
+      _tokenExpirationDate: Date
+    } = JSON.parse(localStorage.getItem('userData'));
+    if (!userData) {
+      return; // we cant log the user in, there's no data
+    }
+
+    // automatically log in user with token from localstorage:
+    // the LS object will no longer be an instance of your User model, you have to do that yourself:
+    const loadedUser = new User(userData.email, userData.id, userData._token, userData._tokenExpirationDate)
+    
+    if (loadedUser.token) { // checks if token is (still) valid/there
+      this.currentUser.next(loadedUser); // set our currentUser to the LS-retrieved user
+    }
+
+  }
+
   logOut() {
     this.currentUser.next(null); // null is our BehaviorSubject's initial value, and when you log out it becomes null again
     this.router.navigate(['/auth']); // add the slash before the route for absolute routing
@@ -67,6 +88,9 @@ export class AuthService {
     // response expiresIn = a string with number of seconds in which the ID token expires
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
     const user = new User(email, localId, idToken, expirationDate);
+
+    // save user data/token in localStorage
+    localStorage.setItem('userData', JSON.stringify(user))
 
     // we update our current user (as a subject, so that components can subscribe to it!)
     this.currentUser.next(user);
