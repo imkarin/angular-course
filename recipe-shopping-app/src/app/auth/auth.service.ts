@@ -24,6 +24,7 @@ export class AuthService {
   private fireBaseApiKey = environment["FIREBASE_APIKEY"]
 
   currentUser = new BehaviorSubject<User>(null);
+  private tokenExpirationTimer: any;
 
   constructor(
     private http: HttpClient,
@@ -75,6 +76,9 @@ export class AuthService {
     
     if (loadedUser.token) { // checks if token is (still) valid/there
       this.currentUser.next(loadedUser); // set our currentUser to the LS-retrieved user
+      // auto logout: pass whatever exp time is left over from now on (in ms):
+      const expDurationLeft = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+      this.autoLogOut(expDurationLeft);
     }
 
   }
@@ -82,6 +86,20 @@ export class AuthService {
   logOut() {
     this.currentUser.next(null); // null is our BehaviorSubject's initial value, and when you log out it becomes null again
     this.router.navigate(['/auth']); // add the slash before the route for absolute routing
+    localStorage.removeItem('userData'); // remove userdata from localstorage
+    
+    // make sure we don't accidentally logOut() again after token expiration, 
+    // since we're already logging out:
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
+  }
+
+  autoLogOut(expirationDuration: number) {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logOut();
+    }, expirationDuration)
   }
 
   private handleAuthentication(email: string, localId: string, idToken: string, expiresIn: number) {
@@ -94,6 +112,9 @@ export class AuthService {
 
     // we update our current user (as a subject, so that components can subscribe to it!)
     this.currentUser.next(user);
+
+    // autologout, and pass our current expiration time from now in ms:
+    this.autoLogOut(expiresIn * 1000);
   }
 
   private handleError(errorRes: HttpErrorResponse) {
