@@ -43,6 +43,10 @@
             <p>{{ error }} </p>
         </div> -->
 
-        <app-alert (closeAlert)="error = null" [message]="error" *ngIf="error"></app-alert>
+        <!-- Error alert using ngIf: -->
+        <!-- <app-alert (closeAlert)="error = null" [message]="error" *ngIf="error"></app-alert> -->
+        
+        <!-- Error alert created programmatically (dynamic component) -->
+        
     </div>
 </div>

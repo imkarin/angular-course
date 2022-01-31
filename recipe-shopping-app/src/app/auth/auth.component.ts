@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewContainerRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AlertComponent } from '../shared/alert/alert.component';
 import { AuthResponseData, AuthService } from './auth.service';
 
 @Component({
@@ -13,11 +14,12 @@ export class AuthComponent implements OnInit {
 
   loginMode = true;
   loading = false;
-  error: string = null;
+  // error: string = null; // you don't need this global error with this approach
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private componentFactoryResolver: ComponentFactoryResolver
   ) { }
 
   ngOnInit(): void {}
@@ -47,14 +49,17 @@ export class AuthComponent implements OnInit {
     authObs.subscribe(
       response => {
         console.log(response)
-        this.error = null;
+        // this.error = null;
         this.loading = false;
 
         // navigate to recipes page:
         this.router.navigate(['/recipes'])
       },
       errorMsg => {
-        this.error = errorMsg;
+        // this.error = errorMsg;
+        // show dynamic component:
+        this.showErrorAlert(errorMsg);
+
         this.loading = false;
       }
     );
@@ -62,8 +67,14 @@ export class AuthComponent implements OnInit {
     form.reset();
   }
 
-  onCloseAlert() {
-    console.log('close')
+  private showErrorAlert(message: string) {
+    // this method will return an AlertComponent-factory:
+    this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
+
+    // you can use the factory to create a complete component
+    // you also need to tell angular where to add this component (angular needs a viewcontainer ref)
+    
+
   }
 
 }
