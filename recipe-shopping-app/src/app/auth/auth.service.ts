@@ -79,6 +79,7 @@ export class AuthService {
       // auto logout: pass whatever exp time is left over from now on (in ms):
       const expDurationLeft = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
       this.autoLogOut(expDurationLeft);
+      console.log('Time left until token expires: ' + expDurationLeft);
     }
 
   }
