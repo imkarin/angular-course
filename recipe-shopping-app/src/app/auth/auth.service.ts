@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { catchError, tap } from 'rxjs/operators';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { User } from './user.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 export interface AuthResponseData {
@@ -24,7 +25,10 @@ export class AuthService {
 
   currentUser = new BehaviorSubject<User>(null);
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   signUp(email: string, password: string) {
     return this.http.post<AuthResponseData>(
@@ -52,6 +56,11 @@ export class AuthService {
     .pipe(catchError(this.handleError), tap(res => {
       return this.handleAuthentication(res.email, res.localId, res.idToken, +res.expiresIn);
     }));
+  }
+
+  logOut() {
+    this.currentUser.next(null); // null is our BehaviorSubject's initial value, and when you log out it becomes null again
+    this.router.navigate(['/auth']); // add the slash before the route for absolute routing
   }
 
   private handleAuthentication(email: string, localId: string, idToken: string, expiresIn: number) {
