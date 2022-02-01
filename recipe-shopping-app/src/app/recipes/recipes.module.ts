@@ -19,19 +19,20 @@ import { RecipesRoutingModule } from "./recipes-routing.module";
         RecipeDetailComponent,
         RecipeStartComponent,
         RecipeEditComponent,
+        // in declarations, you don't only declare components that you'll use in templates,
+        // but ALSO components that you load via routing (like RecipesComponent for /recipes)
     ],
     imports: [
         RecipesRoutingModule, // RouterModule for recipes separate, for leaner code
-
         CommonModule
     ],
-    exports: [ // export all components, so that they can be used in any module that imports this module
-        RecipesComponent,
-        RecipeListComponent,
-        RecipeItemComponent,
-        RecipeDetailComponent,
-        RecipeStartComponent,
-        RecipeEditComponent,
+    exports: [ 
+        // we don't have to export above components (in declarations) anymore,
+        // because they're only being used:
+        // - embedded in the components above
+        // - or in the RecipesRoutingModule
+        // both are part of this file, and aren't used elsewhere, 
+        // so exporting them = unnessecary
     ]
 })
 export class RecipesModule { }
