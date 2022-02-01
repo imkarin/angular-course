@@ -1,4 +1,7 @@
+import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { RouterModule } from "@angular/router";
+
 import { RecipeDetailComponent } from "./recipe-detail/recipe-detail.component";
 import { RecipeEditComponent } from "./recipe-edit/recipe-edit.component";
 import { RecipeItemComponent } from "./recipe-list/recipe-item/recipe-item.component";
@@ -16,6 +19,10 @@ import { RecipesComponent } from "./recipes.component";
         RecipeDetailComponent,
         RecipeStartComponent,
         RecipeEditComponent,
+    ],
+    imports: [
+        RouterModule,
+        CommonModule
     ],
     exports: [ // export all components, so that they can be used in any module that imports this module
         RecipesComponent,
