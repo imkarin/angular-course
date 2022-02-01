@@ -6,11 +6,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { AuthComponent } from './auth/auth.component';
-import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
-import { AlertComponent } from './shared/alert/alert.component';
-
-import { DropdownDirective } from './shared/dropdown.directive';
-import { PlaceholderDirective } from './shared/placeholder/placeholder.directive';
 
 import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
@@ -18,24 +13,25 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { RecipesModule } from './recipes/recipes.module';
 import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    DropdownDirective,
     AuthComponent,
-    LoadingSpinnerComponent,
-    AlertComponent,
-    PlaceholderDirective
+    // be sure that every component is only in one declarations[] inside your app,
+    // you can't have a component here AND in SharedModule's declarations[]
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
-    RecipesModule, // our custom feature module
-    ShoppingListModule // our custom feature module
+    RecipesModule, // our custom feature module (import these for the routing)
+    ShoppingListModule, // our custom feature module (import these for the routing)
+    SharedModule // our shared module (we still import this, because
+                 // it contains directives that we need in the header etc)
   ],
   providers: [
     ShoppingListService, 

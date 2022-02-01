@@ -1,4 +1,3 @@
-import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 
 import { RecipeDetailComponent } from "./recipe-detail/recipe-detail.component";
@@ -9,6 +8,7 @@ import { RecipeStartComponent } from "./recipe-start/recipe-start.component";
 import { RecipesComponent } from "./recipes.component";
 
 import { RecipesRoutingModule } from "./recipes-routing.module";
+import { SharedModule } from "../shared/shared.module";
 
 // This module should be responsible for defining the building blocks for the recipe feature area
 @NgModule({
@@ -24,7 +24,7 @@ import { RecipesRoutingModule } from "./recipes-routing.module";
     ],
     imports: [
         RecipesRoutingModule, // RouterModule for recipes separate, for leaner code
-        CommonModule
+        SharedModule
     ],
     exports: [ 
         // we don't have to export above components (in declarations) anymore,
