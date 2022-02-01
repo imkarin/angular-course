@@ -11,12 +11,6 @@ import { ShoppingListComponent } from "./shopping-list/shopping-list.component";
 
 const routes: Routes = [
     { path: '', redirectTo: '/recipes', pathMatch: 'full' },
-    { path: 'recipes', component: RecipesComponent, canActivate: [AuthGuard], children: [
-        {path: '', component: RecipeStartComponent},
-        {path: 'new', component:RecipeEditComponent}, // has to be above the :id path, or it'll handle 'new' as an id
-        {path: ':id', component: RecipeDetailComponent},
-        {path: ':id/edit', component: RecipeEditComponent},
-    ] },
     { path: 'shopping-list', component: ShoppingListComponent },
     { path: 'auth', component: AuthComponent}
 ];
