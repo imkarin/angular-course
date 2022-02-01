@@ -12,7 +12,7 @@ import { AuthComponent } from "./auth.component";
     imports: [
         SharedModule, // for ngIf and ngFor (CommonModule), and the spinner
         FormsModule, // we use a form to login
-        RouterModule.forChild([{ path: 'auth', component: AuthComponent}])
+        RouterModule.forChild([{ path: '', component: AuthComponent}])
     ]
 })
 export class AuthModule { }

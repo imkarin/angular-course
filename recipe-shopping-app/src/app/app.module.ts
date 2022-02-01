@@ -10,10 +10,10 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
 
 // import { RecipesModule } from './recipes/recipes.module'; 
 // ^ don't forget to stop importing it here to prevent immediate loading (instead of lazy loading)
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
+// import { ShoppingListModule } from './shopping-list/shopping-list.module';
+// import { AuthModule } from './auth/auth.module';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
-import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -27,10 +27,10 @@ import { AuthModule } from './auth/auth.module';
     HttpClientModule,
     AppRoutingModule,
     // RecipesModule, // don't import it anymore, or else it will still be loaded right away instead of lazily
-    ShoppingListModule, // our custom feature module (import these for the routing)
+    // ShoppingListModule, // ^ 
+    // AuthModule // ^
     SharedModule, // our shared module (we still import this, because
                   // it contains directives that we need in the header etc)
-    AuthModule
   ],
   providers: [
     ShoppingListService, 
