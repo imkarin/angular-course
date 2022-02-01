@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
     { path: '', redirectTo: '/recipes', pathMatch: 'full' },
@@ -9,7 +9,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
     exports: [RouterModule]
     // this tells Angular: 'from this module, if i were to add this module to 
     // the imports of another module, what should be accessible to that module?
