@@ -8,7 +8,7 @@ import { RecipeStartComponent } from "./recipe-start/recipe-start.component";
 import { RecipesComponent } from "./recipes.component";
 
 const recipeRoutes: Routes = [
-    { path: 'recipes', component: RecipesComponent, canActivate: [AuthGuard], children: [
+    { path: '', component: RecipesComponent, canActivate: [AuthGuard], children: [
         {path: '', component: RecipeStartComponent},
         {path: 'new', component:RecipeEditComponent}, // has to be above the :id path, or it'll handle 'new' as an id
         {path: ':id', component: RecipeDetailComponent},
