@@ -7,6 +7,8 @@ export const ADD_INGREDIENT = 'ADD_INGREDIENT'
 
 export class AddIngredient implements Action {
     readonly type = ADD_INGREDIENT; // readonly = this must never be changed from outside
-    // Optional: add a payload with data
-    payload: Ingredient;
+    
+    // Adding payload through the contstructor lets us pass the payload
+    // as an argument when we create a new AddIngredient() action
+    constructor(public payload: Ingredient) { };
 }
