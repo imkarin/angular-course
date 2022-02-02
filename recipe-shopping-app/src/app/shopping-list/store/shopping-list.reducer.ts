@@ -18,7 +18,22 @@ const initialState = {
     ingredients: [
         new Ingredient('Apples', 5),
         new Ingredient('Bananas', 5)
-    ]
+    ],
+    editedIngredient: null,
+    editedIngredientIndex: -1
+
+}
+
+// We can declare the interface of this reducer's part of the state
+export interface State {
+    ingredients: Ingredient[];
+    editedIngredient: Ingredient;
+    editedIngredientIndex: number;
+}
+
+// Since this is the only reducer in the app right now, we can also declare the AppState interface:
+export interface AppState {
+    shoppingList: State;
 }
 
 // Pass initialState as default state

@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from './shopping-list.service';
+import * as fromShoppingList from './store/shopping-list.reducer';
 
 @Component({
   selector: 'app-shopping-list',
@@ -14,7 +15,7 @@ export class ShoppingListComponent implements OnInit {
 
   constructor(
     private slService: ShoppingListService,
-    private store: Store<{shoppingList:{ ingredients:Ingredient[] }}>
+    private store: Store<fromShoppingList.AppState>
     // NgRx gives us an injectable store that makes it easy for us 
     // to access our Application State (which is stored in that store)
     // The type you pass to this generic class is the 'form' of your store:
