@@ -1,8 +1,7 @@
 // We'll use NgRx to replace our service-rxjs approach to
 // managing the Application State
-import { Action } from "@ngrx/store";
 import { Ingredient } from "../../shared/ingredient.model";
-import { ADD_INGREDIENT } from "./shopping-list.actions";
+import * as ShoppingListActions from "./shopping-list.actions";
 
 // NgRx reducer is just a function that takes in the state and a
 // dispatched action, changes (a copy of) the state and sends it
@@ -23,18 +22,18 @@ const initialState = {
 }
 
 // Pass initialState as default state
-export function shoppingListReducer(state = initialState, action: Action) {
+export function shoppingListReducer(state = initialState, action: ShoppingListActions.AddIngredient) {
     // Find out which kind of action was dispatched
     switch(action.type) {
         // Which action types your app has, is totally up to you
-        case ADD_INGREDIENT: // convention = all caps type names
+        case ShoppingListActions.ADD_INGREDIENT: // convention = all caps type names
             // NEVER touch the previous state: it's forbidden, it should be immmutable
             // Reducer always returns a (new/modified copy of the) state
             return {
                 ...state,
                 ingredients: [
                     ... state.ingredients,
-                    action // this is wrong, we'll look at actions later
+                    action.payload // this is wrong, we'll look at actions later
                 ]
             }
     }
