@@ -43,12 +43,16 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
   
     // If editMode is off, we're adding a new item - otherwise we're updating an existing one
     if (!this.editMode) { 
-      // this.slService.addIngredient(newIngredient);
       this.store.dispatch(
         new ShoppingListActions.AddIngredient(newIngredient)
       );
     } else {
-      this.slService.setIngredient(this.editedItemIndex, newIngredient);
+      this.store.dispatch(
+        new ShoppingListActions.UpdateIngredient({
+          index: this.editedItemIndex, 
+          newIngredient: newIngredient
+        })
+      );
       this.editMode = false;
     }
 
@@ -57,7 +61,9 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
   }
 
   onDeleteItem() {
-    this.slService.deleteIngredient(this.editedItemIndex);
+    this.store.dispatch(
+      new ShoppingListActions.DeleteIngredient(this.editedItemIndex)
+    );
     this.editMode = false;
     this.slForm.reset();
   }

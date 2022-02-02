@@ -22,7 +22,7 @@ const initialState = {
 }
 
 // Pass initialState as default state
-export function shoppingListReducer(state = initialState, action: ShoppingListActions.AddIngredient) {
+export function shoppingListReducer(state = initialState, action: ShoppingListActions.ShoppingListActions) {
     // Find out which kind of action was dispatched
     switch(action.type) {
         // Which action types your app has, is totally up to you
@@ -36,6 +36,27 @@ export function shoppingListReducer(state = initialState, action: ShoppingListAc
                     action.payload // this is wrong, we'll look at actions later
                 ]
             }
+        case ShoppingListActions.UPDATE_INGREDIENT:
+            const ingredient = state.ingredients[action.payload.index];
+            const updatedIngredient = { // remember, never mutate (part of) the old state!
+                ...ingredient,
+                ...action.payload.newIngredient
+            }
+            const updatedIngredients = [...state.ingredients]; // again, make a copy first
+            updatedIngredients[action.payload.index] = updatedIngredient;
+
+            return {
+                ...state,
+                ingredients: updatedIngredients
+            }
+        case ShoppingListActions.DELETE_INGREDIENT:
+            return {
+                ...state,
+                ingredients: state.ingredients.filter((ingredient, index) => {
+                    return index !== action.payload;
+                })
+            }
+
         default: // we need this, to handle any case we're not explicitly mentioning above
         // ngRx dispatches an "initialization" action and we need to handle this
             return state;
