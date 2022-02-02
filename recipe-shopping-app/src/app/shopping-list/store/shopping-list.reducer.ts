@@ -36,5 +36,8 @@ export function shoppingListReducer(state = initialState, action: ShoppingListAc
                     action.payload // this is wrong, we'll look at actions later
                 ]
             }
+        default: // we need this, to handle any case we're not explicitly mentioning above
+        // ngRx dispatches an "initialization" action and we need to handle this
+            return state;
     }
 }
