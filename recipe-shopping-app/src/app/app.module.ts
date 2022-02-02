@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -8,29 +9,26 @@ import { HeaderComponent } from './header/header.component';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 
-// import { RecipesModule } from './recipes/recipes.module'; 
-// ^ don't forget to stop importing it here to prevent immediate loading (instead of lazy loading)
-// import { ShoppingListModule } from './shopping-list/shopping-list.module';
-// import { AuthModule } from './auth/auth.module';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
+
+import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    // be sure that every component is only in one declarations[] inside your app,
-    // you can't have a component here AND in SharedModule's declarations[]
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    StoreModule.forRoot({shoppingList: shoppingListReducer}),
+    // ^ We're telling NgRx where to find our reducer(s). NgRx sets up a store for us.
+    // The shoppingListReducer function is now assigned to the keyname in front of it
+    // the key name is totally up to you, but should describe the feature of the app that
+    // the function belongs to
     AppRoutingModule,
-    // RecipesModule, // don't import it anymore, or else it will still be loaded right away instead of lazily
-    // ShoppingListModule, // ^ 
-    // AuthModule // ^
-    SharedModule, // our shared module (we still import this, because
-                  // it contains directives that we need in the header etc)
+    SharedModule,
   ],
   providers: [
     ShoppingListService, 
