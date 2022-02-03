@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { catchError, tap } from 'rxjs/operators';
-import { BehaviorSubject, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { User } from './user.model';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -26,7 +26,8 @@ export interface AuthResponseData {
 export class AuthService {
   private fireBaseApiKey = environment["FIREBASE_APIKEY"]
 
-  currentUser = new BehaviorSubject<User>(null);
+  // comment this out to quickly see which files are using the usersubject (through errors):
+  // currentUser = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
   constructor(
@@ -98,6 +99,8 @@ export class AuthService {
   logOut() {
     // update our state with ngrx
     this.store.dispatch(new AuthActions.Logout())
+
+    this.router.navigate(['/auth']);
 
     // we will do this later in a sideefect of ngrx:
     localStorage.removeItem('userData');
