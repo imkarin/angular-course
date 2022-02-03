@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
-import { ShoppingListService } from './shopping-list.service';
 import * as fromShoppingList from './store/shopping-list.reducer';
+import * as ShoppingListActions from './store/shopping-list.actions';
 
 @Component({
   selector: 'app-shopping-list',
@@ -14,7 +14,6 @@ export class ShoppingListComponent implements OnInit {
   ingredients: Observable<{ingredients: Ingredient[]}>;
 
   constructor(
-    private slService: ShoppingListService,
     private store: Store<fromShoppingList.AppState>
     // NgRx gives us an injectable store that makes it easy for us 
     // to access our Application State (which is stored in that store)
@@ -31,7 +30,7 @@ export class ShoppingListComponent implements OnInit {
   }
 
   onEditItem(itemIndex: number) {
-    this.slService.startedEditing.next(itemIndex);
+    this.store.dispatch(new ShoppingListActions.StartEdit(itemIndex));
   }
 
   // NgRx/Angular automatically unsubscribe from NgRx subscriptions

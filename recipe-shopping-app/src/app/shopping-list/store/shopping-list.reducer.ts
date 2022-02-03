@@ -1,34 +1,27 @@
-// We'll use NgRx to replace our service-rxjs approach to
-// managing the Application State
 import { Ingredient } from "../../shared/ingredient.model";
 import * as ShoppingListActions from "./shopping-list.actions";
 
 // NgRx reducer is just a function that takes in the state and a
 // dispatched action, changes (a copy of) the state and sends it
-// to the store
-
+// to the store.
 // The reducer expects arguments: current state, and action
 // the NgRx package will eventually call this function and pass
 // these arguments into them
 
-// You can set an initial state. your state should be a js object
-// most of the time (that way you can group multiple, diff kinds
-// of data together in the state)
-const initialState = {
+// We can declare the interface: how does our state FOR THIS REDUCER look
+export interface State {
+    ingredients: Ingredient[];
+    editedIngredient: Ingredient;
+    editedIngredientIndex: number;
+}
+
+const initialState: State = {
     ingredients: [
         new Ingredient('Apples', 5),
         new Ingredient('Bananas', 5)
     ],
     editedIngredient: null,
     editedIngredientIndex: -1
-
-}
-
-// We can declare the interface of this reducer's part of the state
-export interface State {
-    ingredients: Ingredient[];
-    editedIngredient: Ingredient;
-    editedIngredientIndex: number;
 }
 
 // Since this is the only reducer in the app right now, we can also declare the AppState interface:
@@ -36,12 +29,9 @@ export interface AppState {
     shoppingList: State;
 }
 
-// Pass initialState as default state
-export function shoppingListReducer(state = initialState, action: ShoppingListActions.ShoppingListActions) {
-    // Find out which kind of action was dispatched
+export function shoppingListReducer(state: State = initialState, action: ShoppingListActions.ShoppingListActions) {
     switch(action.type) {
-        // Which action types your app has, is totally up to you
-        case ShoppingListActions.ADD_INGREDIENT: // convention = all caps type names
+        case ShoppingListActions.ADD_INGREDIENT:
             // NEVER touch the previous state: it's forbidden, it should be immmutable
             // Reducer always returns a (new/modified copy of the) state
             return {
@@ -71,8 +61,20 @@ export function shoppingListReducer(state = initialState, action: ShoppingListAc
                     return index !== action.payload;
                 })
             }
-
-        default: // we need this, to handle any case we're not explicitly mentioning above
+        case ShoppingListActions.START_EDIT:
+            console.log(action.payload)
+            return {
+                ...state,
+                editedIngredient: {...state.ingredients[action.payload]}, // copy!
+                editedIngredientIndex: action.payload
+            }
+        case ShoppingListActions.STOP_EDIT:
+            return {
+                ...state,
+                editedIngredient: null,
+                editedIngredientIndex: -1
+            }
+        default:
         // ngRx dispatches an "initialization" action and we need to handle this
             return state;
     }

@@ -6,6 +6,8 @@ import { Ingredient } from "src/app/shared/ingredient.model";
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const UPDATE_INGREDIENT = 'UPDATE_INGREDIENT';
 export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
+export const START_EDIT = 'START_EDIT';
+export const STOP_EDIT = 'STOP_EDIT';
 
 export class AddIngredient implements Action {
     readonly type = ADD_INGREDIENT; // readonly = this must never be changed from outside
@@ -27,7 +29,22 @@ export class DeleteIngredient implements Action {
     constructor(public payload: number) { }
 }
 
+export class StartEdit implements Action {
+    readonly type = START_EDIT;
+    
+    constructor(public payload: number) { } // index of the ingredient we're editing
+}
+
+export class StopEdit implements Action {
+    readonly type = STOP_EDIT;
+}
+
 // In the reducer, the action that the reducer receives as an argument is no longer
 // just of type AddIngredient: it could be one of the three above.
 // Therefore we create a union type which can mean one of the three:
-export type ShoppingListActions = AddIngredient | UpdateIngredient | DeleteIngredient;
+export type ShoppingListActions = 
+    AddIngredient | 
+    UpdateIngredient | 
+    DeleteIngredient |
+    StartEdit |
+    StopEdit;
