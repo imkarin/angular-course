@@ -4,7 +4,10 @@ import { environment } from 'src/environments/environment';
 import { catchError, tap } from 'rxjs/operators';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { User } from './user.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../store/app.reducer';
+import * as AuthActions from './store/auth.actions';
 
 
 export interface AuthResponseData {
@@ -28,7 +31,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private store: Store<fromApp.AppState>
   ) { }
 
   signUp(email: string, password: string) {
@@ -66,17 +70,24 @@ export class AuthService {
       _token: string;
       _tokenExpirationDate: Date
     } = JSON.parse(localStorage.getItem('userData'));
+
     if (!userData) {
       return; // we cant log the user in, there's no data
     }
 
     // automatically log in user with token from localstorage:
     // the LS object will no longer be an instance of your User model, you have to do that yourself:
-    const loadedUser = new User(userData.email, userData.id, userData._token, userData._tokenExpirationDate)
-    
+    const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
+
     if (loadedUser.token) { // checks if token is (still) valid/there
-      this.currentUser.next(loadedUser); // set our currentUser to the LS-retrieved user
-      // auto logout: pass whatever exp time is left over from now on (in ms):
+      // update our state('s auth slice) with ngrx
+      this.store.dispatch(new AuthActions.Login({
+        email: userData.email,
+        userId: userData.id,
+        token: userData._token,
+        expirationDate: new Date(userData._tokenExpirationDate)
+      }))
+          // auto logout: pass whatever exp time is left over from now on (in ms):
       const expDurationLeft = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
       this.autoLogOut(expDurationLeft);
       console.log('Time left until token expires: ' + expDurationLeft);
@@ -85,9 +96,11 @@ export class AuthService {
   }
 
   logOut() {
-    this.currentUser.next(null); // null is our BehaviorSubject's initial value, and when you log out it becomes null again
-    this.router.navigate(['/auth']); // add the slash before the route for absolute routing
-    localStorage.removeItem('userData'); // remove userdata from localstorage
+    // update our state with ngrx
+    this.store.dispatch(new AuthActions.Logout())
+
+    // we will do this later in a sideefect of ngrx:
+    localStorage.removeItem('userData');
     
     // make sure we don't accidentally logOut() again after token expiration, 
     // since we're already logging out:
@@ -109,10 +122,16 @@ export class AuthService {
     const user = new User(email, localId, idToken, expirationDate);
 
     // save user data/token in localStorage
+    // we will do this later in a sideeffect of ngrx:
     localStorage.setItem('userData', JSON.stringify(user))
 
-    // we update our current user (as a subject, so that components can subscribe to it!)
-    this.currentUser.next(user);
+    // update our state('s auth slice) with ngrx
+    this.store.dispatch(new AuthActions.Login({
+      email: email,
+      userId: localId,
+      token: idToken,
+      expirationDate: expirationDate
+    }))
 
     // autologout, and pass our current expiration time from now in ms:
     this.autoLogOut(expiresIn * 1000);
