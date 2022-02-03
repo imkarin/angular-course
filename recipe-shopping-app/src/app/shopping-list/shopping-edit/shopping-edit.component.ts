@@ -14,7 +14,6 @@ import * as fromShoppingList from '../store/shopping-list.reducer';
 export class ShoppingEditComponent implements OnInit, OnDestroy{
   subscription: Subscription;
   editMode = false;
-  editedItemIndex: number;
   editedItem: Ingredient;
   @ViewChild('f') slForm: NgForm;
 
@@ -28,7 +27,6 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
       .subscribe(changedStateData => {
         if (changedStateData.editedIngredientIndex > -1) {
           this.editMode = true;
-          this.editedItemIndex = changedStateData.editedIngredientIndex;
           this.editedItem = changedStateData.editedIngredient;
           
           // Show the clicked item in the form controls:
@@ -54,10 +52,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
       );
     } else {
       this.store.dispatch(
-        new ShoppingListActions.UpdateIngredient({
-          index: this.editedItemIndex, 
-          newIngredient: newIngredient
-        })
+        new ShoppingListActions.UpdateIngredient(newIngredient)
       );
       this.editMode = false;
       this.store.dispatch(new ShoppingListActions.StopEdit())
@@ -69,7 +64,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
 
   onDeleteItem() {
     this.store.dispatch(
-      new ShoppingListActions.DeleteIngredient(this.editedItemIndex)
+      new ShoppingListActions.DeleteIngredient()
     );
     this.editMode = false;
     this.store.dispatch(new ShoppingListActions.StopEdit())

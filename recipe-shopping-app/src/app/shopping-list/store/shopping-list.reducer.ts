@@ -42,14 +42,13 @@ export function shoppingListReducer(state: State = initialState, action: Shoppin
                 ]
             }
         case ShoppingListActions.UPDATE_INGREDIENT:
-            const ingredient = state.ingredients[action.payload.index];
-            const updatedIngredient = { // remember, never mutate (part of) the old state!
-                ...ingredient,
-                ...action.payload.newIngredient
+            const ingredientToBeUpdated = state.ingredients[state.editedIngredientIndex];
+            const updatedIngredient = {     // remember, never mutate (part of) the old state!
+                ...ingredientToBeUpdated,   // the above IngrToBeUpdated = an object = a reference type
+                ...action.payload           // so we have to modify a COPY of it
             }
             const updatedIngredients = [...state.ingredients]; // again, make a copy first
-            updatedIngredients[action.payload.index] = updatedIngredient;
-
+            updatedIngredients[state.editedIngredientIndex] = updatedIngredient;
             return {
                 ...state,
                 ingredients: updatedIngredients
@@ -58,7 +57,7 @@ export function shoppingListReducer(state: State = initialState, action: Shoppin
             return {
                 ...state,
                 ingredients: state.ingredients.filter((ingredient, index) => {
-                    return index !== action.payload;
+                    return index !== state.editedIngredientIndex;
                 })
             }
         case ShoppingListActions.START_EDIT:

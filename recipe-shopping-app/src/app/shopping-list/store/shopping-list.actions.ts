@@ -20,13 +20,14 @@ export class AddIngredient implements Action {
 export class UpdateIngredient implements Action {
     readonly type = UPDATE_INGREDIENT;
 
-    constructor(public payload: {index: number, newIngredient: Ingredient}) { }
+    constructor(public payload: Ingredient) { } // gets the new ingredient
+    // ^already knows which ingredient we're editing through state.editedIngredient
 }
 
 export class DeleteIngredient implements Action {
     readonly type = DELETE_INGREDIENT;
-
-    constructor(public payload: number) { }
+    // we don't need to pass a payload: we already know which item we're
+    // currently editing through state.editedIngredient    
 }
 
 export class StartEdit implements Action {
