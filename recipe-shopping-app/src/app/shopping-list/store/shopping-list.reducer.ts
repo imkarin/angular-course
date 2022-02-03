@@ -24,11 +24,6 @@ const initialState: State = {
     editedIngredientIndex: -1
 }
 
-// Since this is the only reducer in the app right now, we can also declare the AppState interface:
-export interface AppState {
-    shoppingList: State;
-}
-
 export function shoppingListReducer(state: State = initialState, action: ShoppingListActions.ShoppingListActions) {
     switch(action.type) {
         case ShoppingListActions.ADD_INGREDIENT:
